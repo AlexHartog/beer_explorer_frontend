@@ -1,0 +1,21 @@
+
+// your-component.component.scss
+.collapsible-panel {
+    .panel-header {
+        cursor: pointer;
+        // Add header styles (like padding, background color, etc.)
+    }
+
+    .panel-content {
+        // Add content styles (like padding)
+        // You can also add transition for smooth opening/closing
+    }
+}
+
+button { 
+    display: block;
+}
+
+mat-divider {
+    margin: 20px 0;
+}

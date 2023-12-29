@@ -8,7 +8,7 @@ import { Beer } from '../models/beer';
   providedIn: 'root'
 })
 export class BeerService {
-  private beersUrl = 'http://localhost:8000/api/beers';
+  private beersUrl = 'http://192.168.1.86:8000/api/beers';
 
   constructor(
     private http: HttpClient

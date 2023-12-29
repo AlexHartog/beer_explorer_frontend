@@ -1,0 +1,83 @@
+<mat-accordion>
+    <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Bier Check-in
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <section>
+            <form [formGroup]="beerForm" >
+                <mat-form-field>
+                    <mat-label>Merk</mat-label>
+                    <input
+                        type="text" 
+                        placeholder="Pick one"
+                        matInput
+                        formControlName="brandNameControl"
+                        [matAutocomplete]="autoBrand"
+                        >
+                    <mat-autocomplete #autoBrand="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredBrandOptions | async" [value]="option">
+                        {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Type</mat-label>
+                    <input
+                        type="text" 
+                        placeholder="Pick one"
+                        matInput
+                        formControlName="beerTypeControl"
+                        [matAutocomplete]="autoBeerType"
+                        >
+                    <mat-autocomplete #autoBeerType="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredBeerTypeOptions | async" [value]="option">
+                        {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Naam</mat-label>
+                    <input
+                        type="text" 
+                        placeholder="Pick one"
+                        matInput
+                        formControlName="beerNameControl"
+                        [matAutocomplete]="autoBeerName"
+                        >
+                    <mat-autocomplete #autoBeerName="matAutocomplete">
+                        <mat-option *ngFor="let option of filteredBeerNameOptions | async" [value]="option">
+                        {{ option }}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+                <button mat-raised-button color="primary">Maak aan</button>            
+            </form>
+        </section>
+        <mat-divider></mat-divider>
+        <section>
+            <form [formGroup]="checkinForm">
+                <mat-form-field>
+                    <mat-label>Speler</mat-label>
+
+                    <input 
+                        type="text"
+                        matInput
+                        formControlName="user"
+                        >
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Datum</mat-label>
+
+                    <input 
+                        type="text"
+                        matInput
+                        formControlName="date"
+                        >
+                </mat-form-field>
+                <button mat-raised-button color="primary">Check in</button>
+            </form>
+        </section>
+    </mat-expansion-panel>
+</mat-accordion>

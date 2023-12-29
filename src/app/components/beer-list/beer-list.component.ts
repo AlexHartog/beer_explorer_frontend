@@ -9,7 +9,10 @@ import { BeerService } from '../../services/beer.service';
 @Component({
   selector: 'app-beer-list',
   standalone: true,
-  imports: [CommonModule, MatTableModule ],
+  imports: [
+    CommonModule, 
+    MatTableModule 
+  ],
   templateUrl: './beer-list.component.html',
   styleUrl: './beer-list.component.scss'
 })
@@ -32,7 +35,6 @@ export class BeerListComponent implements OnInit {
     this.beerService.getBeers()
       .subscribe(beers => {
         this.beers = new MatTableDataSource<Beer>(beers);
-        console.log("Beers: ", this.beers);
       });
   }
 }

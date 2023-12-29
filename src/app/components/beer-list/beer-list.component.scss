@@ -1,0 +1,41 @@
+@use '@angular/material' as mat;
+@import '../../styles/variables';
+
+.mat-mdc-table {
+    width: 100%;
+    background-color: #fff;
+
+    .mat-mdc-header-row, .mat-mdc-row {
+        min-height: 48px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .mat-mdc-header-row {
+        color: #ffffff;
+        background-color: mat.get-color-from-palette($default-accent); // Adjust header background color here
+
+        .mat-mdc-header-cell {
+            padding: 8px 24px;
+            text-align: left;
+            font-weight: 304000;
+        }
+    }
+
+    .mat-mdc-cell {
+        padding: 8px 24px;
+        text-align: left;
+    }
+
+    .mat-mdc-row {
+        &:hover {
+            background-color: #eeeeee; // Adjust hover color here
+        }
+    }
+}
+
+// Style for the paginator
+.mat-paginator {
+    mat-select {
+        width: 50px;
+    }
+}

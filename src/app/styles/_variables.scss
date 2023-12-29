@@ -1,0 +1,28 @@
+@use '@angular/material' as mat;
+@include mat.core();
+$dark-primary-text: rgba(#232323, 0.87);
+$light-primary-text: #ffffff;
+
+$mat-primary: (
+  main: #232323,
+  lighter: #bdbdbd,
+  darker: #151515,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+$default-primary: mat.define-palette($mat-primary, main, lighter, darker);
+
+$mat-accent: (
+  main: #673ab7,
+  lighter: #7954ba,
+  darker: #5a25b8,
+  contrast : (
+    main: $dark-primary-text,
+    lighter: $dark-primary-text,
+    darker: $dark-primary-text,
+  )
+);
+$default-accent: mat.define-palette($mat-accent, main, lighter, darker);
