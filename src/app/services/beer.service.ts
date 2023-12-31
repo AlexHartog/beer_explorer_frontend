@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Beer } from '../models/beer';
@@ -9,6 +9,9 @@ import { Beer } from '../models/beer';
 })
 export class BeerService {
   private beersUrl = 'http://192.168.1.86:8000/api/beers';
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(
     private http: HttpClient
@@ -21,16 +24,27 @@ export class BeerService {
         catchError(this.handleError<Beer[]>('getBeers', []))
       );
   }
+
+  createBeer(beer: Beer): Observable<Beer> {
+    console.log("Creating new beer")
+    const postData = {
+      brand: beer.brand,
+      name: beer.name,
+      type: beer.type,
+      percentage: beer.percentage,
+    }
+    return this.http.post<Beer>(this.beersUrl + '/', postData, this.httpOptions).pipe(
+      tap((newBeer: Beer) => console.log(`Added new beer ${newBeer}`)),
+      catchError(this.handleError<Beer>('addBeer'))
+    )
+  }
   
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
 
-      // TODO: send the error to remote logging infrastructure
-      console.error(error);
-
       console.log(`${operation} failed: ${error.message}`);
 
-      return of(result as T);
+      throw new Error(error);
     }
   }
 }

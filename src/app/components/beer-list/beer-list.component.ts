@@ -20,7 +20,7 @@ export class BeerListComponent implements OnInit {
 
   // beers: Beer[] = [];
   beers: MatTableDataSource<Beer> = new MatTableDataSource<Beer>([]);
-  displayedColumns: string[] = ['name', 'brand', 'type'];
+  displayedColumns: string[] = ['name', 'brand', 'type', 'percentage'];
 
   constructor(
     private beerService: BeerService,
@@ -34,6 +34,7 @@ export class BeerListComponent implements OnInit {
   getBeers(): void {
     this.beerService.getBeers()
       .subscribe(beers => {
+        console.log('Fetched beers: ', beers);
         this.beers = new MatTableDataSource<Beer>(beers);
       });
   }

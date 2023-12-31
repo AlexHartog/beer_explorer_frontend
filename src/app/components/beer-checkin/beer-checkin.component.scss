@@ -14,8 +14,15 @@
 
 button { 
     display: block;
+    margin: 5px;
 }
 
 mat-divider {
     margin: 20px 0;
+}
+
+.warning {
+    color: red;
+    display: flex;
+    align-items: center;
 }
