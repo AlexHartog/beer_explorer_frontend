@@ -117,7 +117,6 @@ export class BeerCheckinComponent implements OnInit {
 
 
   onBeerSubmit(): void {
-    console.log("Creating beer")
     // TODO: Create warning when beer already exists
     // TODO: Add percentage
     console.log(this.beerForm.value);
@@ -127,13 +126,11 @@ export class BeerCheckinComponent implements OnInit {
       type: this.beerForm.get('beerType')?.value,
       percentage: this.beerForm.get('alcoholPercentage')?.value / 100,
     }
-    console.log("Beer: ", newBeer)
     this.beerService.createBeer(newBeer)
       .subscribe({
         next: beer => {
           this.beers.push(beer);
           this.checkinForm.controls["beer"].setValue(beer.id);
-          console.log("Beer panel: ", this.newBeerPanel);
           this.newBeerPanel.close();
       },
       error: error => {
@@ -144,7 +141,7 @@ export class BeerCheckinComponent implements OnInit {
   }
 
   private _filter(value: string | null, options: string[]): string[] {
-    console.log('Value: ', (value ?? ''), ' in ', options);
+    // console.log('Value: ', (value ?? ''), ' in ', options);
     const filterValue = (value ?? '').toLowerCase();
     return options.filter(option => 
       option.toLowerCase().includes(filterValue)
@@ -152,7 +149,7 @@ export class BeerCheckinComponent implements OnInit {
   }
 
   beerCheckedIn(): boolean {
-    return this.checkins.some(checkin => checkin.beer.id === this.checkinForm.get('beer')?.value)
+    return this.checkins.some(checkin => checkin.beer?.id === this.checkinForm.get('beer')?.value)
   }
 
   currentBeer(): Beer {

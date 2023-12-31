@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { BeerListComponent } from './components/beer-list/beer-list.component';
+import { CheckinListComponent } from './components/checkin-list/checkin-list.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { BeerCheckinComponent } from './components/beer-checkin/beer-checkin.component';
 
@@ -14,6 +15,7 @@ import { BeerCheckinComponent } from './components/beer-checkin/beer-checkin.com
     BeerListComponent, 
     MenuComponent, 
     BeerCheckinComponent, 
+    CheckinListComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
