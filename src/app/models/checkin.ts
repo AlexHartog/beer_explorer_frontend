@@ -5,6 +5,7 @@ export interface Checkin {
     beer: Beer 
     date: Date
     rating: number
+    created_at: Date
 }
 
 export interface CreateCheckin {
