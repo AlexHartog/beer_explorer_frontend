@@ -3,12 +3,13 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Checkin, CreateCheckin } from '../models/checkin';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CheckinService {
-  private checkinUrl = 'http://192.168.1.86:8000/api/beercheckins';
+  private checkinUrl = environment.apiUrl + '/beercheckins';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };

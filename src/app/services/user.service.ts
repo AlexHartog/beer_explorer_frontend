@@ -3,12 +3,13 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private userUrl = 'http://192.168.1.86:8000/api/users';
+  private userUrl = environment.apiUrl + '/users';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -18,6 +19,7 @@ export class UserService {
   ) { }
 
   getUsers(): Observable<User[]> {
+    console.log("Getting users from ", environment.apiUrl);
     return this.http.get<User[]>(this.userUrl)
       .pipe(
         tap(_ => console.log('fetched users')),

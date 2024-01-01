@@ -3,12 +3,13 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Beer } from '../models/beer';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BeerService {
-  private beersUrl = 'http://192.168.1.86:8000/api/beers';
+  private beersUrl = environment.apiUrl + '/beers';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
