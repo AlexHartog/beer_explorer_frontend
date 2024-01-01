@@ -42,6 +42,7 @@ import { User } from '../../models/user';
 })
 export class BeerCheckinComponent implements OnInit {
 
+  @ViewChild('newCheckinPanel') newCheckinPanel!: MatExpansionPanel;
   @ViewChild('newBeerPanel') newBeerPanel!: MatExpansionPanel;
 
   beers: Beer[] = [];
@@ -265,6 +266,7 @@ export class BeerCheckinComponent implements OnInit {
       .subscribe({
         next: checkin => {
           this.checkins.push(checkin);
+          this.newCheckinPanel.close();
       },
       error: error => {
         // TODO: Show that we failed to create the checkin
