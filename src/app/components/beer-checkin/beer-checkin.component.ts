@@ -83,7 +83,7 @@ export class BeerCheckinComponent implements OnInit {
       user: new FormControl(''),
       // beer: new FormControl(null),
       // TODO: Remove this, only for testing
-      beer: new FormControl(5),
+      beer: new FormControl(null),
       date: new FormControl(new Date()),
       // pictureControl: new FormControl(''),
       rating: new FormControl(null),
