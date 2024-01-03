@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 
-import { Checkin, getInBarString } from '../../models/checkin';
+import { Checkin } from '../../models/checkin';
 import { CheckinService } from '../../services/checkin.service';
 
 @Component({
