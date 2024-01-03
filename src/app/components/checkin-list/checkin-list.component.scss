@@ -33,7 +33,7 @@
 
     .mat-mdc-cell {
         @media (max-width: 576px) {
-            font-size: 10px;
+            font-size: 9px;
             padding: 4px;
           }
 
@@ -67,3 +67,7 @@
 .checkin-header {
     padding: 5px;
 }
+
+.no-wrap {
+    white-space: nowrap;
+  }
