@@ -17,3 +17,15 @@ export interface CreateCheckin {
     in_bar: boolean
     rating?: number
 }
+
+export function dateEquals(checkin: Checkin, date: Date) {
+    if (date == null) {
+        return false;
+    }
+    const dateCheckin = new Date(checkin.date);
+    const dateToCompare = new Date(date);
+    dateCheckin.setHours(0,0,0,0);
+    dateToCompare.setHours(0,0,0,0);
+
+    return dateCheckin.getTime() === dateToCompare.getTime()
+}

@@ -45,7 +45,7 @@
                                 </mat-autocomplete>
                             </mat-form-field>
                             <mat-form-field>
-                                <mat-label>Naam (optioneel)</mat-label>
+                                <mat-label>Naam</mat-label>
                                 <input
                                     type="text" 
                                     placeholder="Pick one"
@@ -126,7 +126,7 @@
                     <mat-checkbox formControlName="inBar">In café</mat-checkbox>
                 </mat-form-field>
                 <mat-form-field>
-                    <mat-label>Cijfer (optioneel)</mat-label>
+                    <mat-label>Cijfer</mat-label>
                     <mat-select
                         formControlName="rating"
                         >
@@ -141,7 +141,11 @@
                     <!-- <input type="file" (change)="onFileSelected($event)" accept="image/*"> -->
                 <!-- </mat-form-field> -->
                 <input type="hidden" formControlName="beer">
-                <button mat-raised-button type="submit" color="primary">Check in</button>
+                <span class="error" *ngIf="checkinFormErrorMessage">
+                    <mat-icon>warning</mat-icon>
+                    <h3>{{ checkinFormErrorMessage }}</h3>
+                </span>
+                <button mat-raised-button type="submit" color="primary" [disabled]="!canCheckin()">Check in</button>
             </form>
         </section>
     </mat-expansion-panel>

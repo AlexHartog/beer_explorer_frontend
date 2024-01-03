@@ -58,10 +58,12 @@ export class CheckinService {
 
 
   createCheckin(checkin: CreateCheckin): Observable<Checkin> {
-    console.log("Creating new checkin: ", checkin);
+    const checkinDate = new Date(checkin.date);
+    const timeZoneOffsetInMinutes = checkinDate.getTimezoneOffset();
+    checkinDate.setMinutes(checkinDate.getMinutes() - timeZoneOffsetInMinutes);
     const postData = {
       beer_id: checkin.beerId,
-      date: checkin.date.toISOString().slice(0, 10),
+      date: checkinDate.toISOString().slice(0, 10),
       user_id: checkin.userId,
       rating: checkin.rating,
       in_bar: checkin.in_bar,

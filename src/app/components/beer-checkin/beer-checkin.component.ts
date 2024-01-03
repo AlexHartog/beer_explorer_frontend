@@ -7,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators, FormBuilder } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -17,7 +17,7 @@ import { BeerService } from '../../services/beer.service';
 import { CheckinService } from '../../services/checkin.service';
 import { UserService } from '../../services/user.service';
 import { Beer, beersEqual } from '../../models/beer';
-import { Checkin, CreateCheckin } from '../../models/checkin';
+import { Checkin, CreateCheckin, dateEquals } from '../../models/checkin';
 import { User } from '../../models/user';
 
 @Component({
@@ -55,6 +55,7 @@ export class BeerCheckinComponent implements OnInit {
   checkinForm: FormGroup;
 
   beerFormErrorMessage = '';
+  checkinFormErrorMessage = '';
 
   brandOptions: string[] = [];
   beerTypeOptions: string[] = [];
@@ -72,24 +73,23 @@ export class BeerCheckinComponent implements OnInit {
     private beerService: BeerService,
     private checkinService: CheckinService,
     private userService: UserService,
+    private formBuilder: FormBuilder,
     ) {
 
-    this.beerForm = new FormGroup({
-      brandName: new FormControl(''),
-      beerType: new FormControl(''),
+    this.beerForm = this.formBuilder.group({
+      brandName: ['', Validators.required],
+      beerType: ['', Validators.required],
       beerName: new FormControl(''),
-      alcoholPercentage: new FormControl(null),
+      alcoholPercentage: [null, Validators.required],
     });
 
-    this.checkinForm = new FormGroup({
-
-      user: new FormControl(''),
-      beer: new FormControl(null),
-      date: new FormControl(new Date()),
-      // pictureControl: new FormControl(''),
-      rating: new FormControl(null),
-      inBar: new FormControl(false),
-      // reviewControl: new FormControl(''),
+    this.checkinForm = this.formBuilder.group({
+      user: ['', Validators.required],
+      beer: [null, Validators.required],
+      date: [new Date(), Validators.required],
+      rating: [null],
+      inBar: [false]
+      // TODO: Add Picture and Review 
 
     })
   }
@@ -163,6 +163,10 @@ export class BeerCheckinComponent implements OnInit {
     );
   }
 
+  canCheckin(): boolean {
+    return !this.userCheckedInToday() && this.checkinForm.valid
+  }
+
   beerCheckedIn(): boolean {
     return this.checkins.some(checkin => checkin.beer?.id === this.checkinForm.get('beer')?.value)
   }
@@ -171,7 +175,7 @@ export class BeerCheckinComponent implements OnInit {
     if (this.getUserId() == null) {
       return false;
     }
-    return this.checkins.some(checkin => checkin.user.id == this.getUserId());
+    return this.checkins.some(checkin => checkin.user?.id == this.getUserId() && dateEquals(checkin, this.checkinForm.get('date')?.value));
   }
 
   currentBeer(): Beer {
@@ -274,10 +278,17 @@ export class BeerCheckinComponent implements OnInit {
   onCheckinSubmit(): void {
     console.log("Creating checking")
     console.log(this.checkinForm.value);
+    this.checkinFormErrorMessage = "";
+    if(!this.checkinForm.valid) {
+      this.checkinFormErrorMessage = "Niet alle benodigde velden zijn ingevuld"
+      return
+    }
+
     const userId = this.getUserId();
     if (!userId) {
       return
     }
+    console.log("Creating with date: ", this.checkinForm.get('date')?.value);
     const newCheckin: CreateCheckin = {
       beerId: this.checkinForm.get('beer')?.value,
       userId: userId,
