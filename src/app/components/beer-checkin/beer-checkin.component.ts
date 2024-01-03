@@ -10,6 +10,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, startWith, map, of } from 'rxjs';
 import { BeerService } from '../../services/beer.service';
@@ -17,7 +18,6 @@ import { CheckinService } from '../../services/checkin.service';
 import { UserService } from '../../services/user.service';
 import { Beer, beersEqual } from '../../models/beer';
 import { Checkin, CreateCheckin } from '../../models/checkin';
-import { BoundElementProperty } from '@angular/compiler';
 import { User } from '../../models/user';
 
 @Component({
@@ -36,6 +36,7 @@ import { User } from '../../models/user';
     MatNativeDateModule,
     MatSelectModule,
     MatIconModule,
+    MatCheckboxModule,
   ],
   templateUrl: './beer-checkin.component.html',
   styleUrl: './beer-checkin.component.scss'
@@ -52,6 +53,8 @@ export class BeerCheckinComponent implements OnInit {
   // TODO: Split the beerForm into a separate component
   beerForm: FormGroup;
   checkinForm: FormGroup;
+
+  beerFormErrorMessage = '';
 
   brandOptions: string[] = [];
   beerTypeOptions: string[] = [];
@@ -81,16 +84,16 @@ export class BeerCheckinComponent implements OnInit {
     this.checkinForm = new FormGroup({
 
       user: new FormControl(''),
-      // beer: new FormControl(null),
-      // TODO: Remove this, only for testing
       beer: new FormControl(null),
       date: new FormControl(new Date()),
       // pictureControl: new FormControl(''),
       rating: new FormControl(null),
+      inBar: new FormControl(false),
       // reviewControl: new FormControl(''),
 
     })
   }
+
 
 
   ngOnInit() {
@@ -120,6 +123,8 @@ export class BeerCheckinComponent implements OnInit {
   onBeerSubmit(): void {
     // TODO: Create warning when beer already exists
     // TODO: Add percentage
+    this.beerFormErrorMessage = "";
+
     console.log(this.beerForm.value);
     const newBeer: Beer = {
       name: this.beerForm.get('beerName')?.value,
@@ -127,6 +132,15 @@ export class BeerCheckinComponent implements OnInit {
       type: this.beerForm.get('beerType')?.value,
       percentage: this.beerForm.get('alcoholPercentage')?.value / 100,
     }
+
+    if (newBeer.percentage < 0.03) {
+      this.beerFormErrorMessage = "Minimum alcohol percentage is 3%";
+      return
+    } else if (newBeer.percentage > 1) {
+      this.beerFormErrorMessage = "Alcohol percentage te hoog"
+      return
+    }
+
     this.beerService.createBeer(newBeer)
       .subscribe({
         next: beer => {
@@ -151,6 +165,13 @@ export class BeerCheckinComponent implements OnInit {
 
   beerCheckedIn(): boolean {
     return this.checkins.some(checkin => checkin.beer?.id === this.checkinForm.get('beer')?.value)
+  }
+
+  userCheckedInToday(): boolean {
+    if (this.getUserId() == null) {
+      return false;
+    }
+    return this.checkins.some(checkin => checkin.user.id == this.getUserId());
   }
 
   currentBeer(): Beer {
@@ -193,12 +214,7 @@ export class BeerCheckinComponent implements OnInit {
   }
 
   beerExists(): boolean {
-    // console.log("Checking if beer exists: ", this.currentBeer(), " in ", this.beers);
-    // console.log("Exists is ", this.beers.some(beer => beer.brand.name === this.beerForm.get('brandName')?.value))
-    const beerFound = this.beers.some(beer => beersEqual(beer, this.currentBeer()));
-    // console.log("Beerfound: ", beerFound);
-    return beerFound;
-    // return this.beers.includes(this.currentBeer())
+    return this.beers.some(beer => beersEqual(beer, this.currentBeer()));
   }
 
   canCreateBeer(): boolean {
@@ -234,6 +250,13 @@ export class BeerCheckinComponent implements OnInit {
       })
   }
 
+  convertDecimal(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    let normalizedValue = inputValue.replace(/,/g, '.');
+    normalizedValue = normalizedValue.replace(/[^0-9.]/g, '');
+    this.beerForm.controls["alcoholPercentage"].setValue(normalizedValue);
+  }
+
   getUserId(): number | undefined {
     const currentUser = this.users.find(user => user.name === this.checkinForm.get('user')?.value);
     return currentUser?.id;
@@ -241,7 +264,7 @@ export class BeerCheckinComponent implements OnInit {
 
   onFileSelected(event: Event) {
     const element = event.currentTarget as HTMLInputElement;
-    let fileList: FileList | null = element.files;
+    const fileList: FileList | null = element.files;
     if (fileList) {
       this.selectedFile = fileList[0];
       console.log("File selected: ", this.selectedFile.name);
@@ -259,7 +282,7 @@ export class BeerCheckinComponent implements OnInit {
       beerId: this.checkinForm.get('beer')?.value,
       userId: userId,
       date: this.checkinForm.get('date')?.value,
-      in_bar: false,
+      in_bar: this.checkinForm.get('inBar')?.value,
       rating: this.checkinForm.get('rating')?.value,
     };
     console.log("Checkin: ", newCheckin)

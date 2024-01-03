@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Checkin, CreateCheckin } from '../models/checkin';
 import { environment } from '../../environments/environment';
@@ -64,6 +64,7 @@ export class CheckinService {
       date: checkin.date.toISOString().slice(0, 10),
       user_id: checkin.userId,
       rating: checkin.rating,
+      in_bar: checkin.in_bar,
     }
     return this.http.post<Checkin>(this.checkinUrl + '/', postData, this.httpOptions).pipe(
       tap((newCheckin: Checkin) => {

@@ -1,7 +1,8 @@
 import { Beer } from './beer';
+import { User } from './user'
 
 export interface Checkin {
-    userId: number
+    user: User
     beer: Beer 
     date: Date
     rating: number

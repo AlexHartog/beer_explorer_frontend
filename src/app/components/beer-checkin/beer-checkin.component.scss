@@ -21,8 +21,14 @@ mat-divider {
     margin: 20px 0;
 }
 
-.warning {
+.error {
     color: red;
+    display: flex;
+    align-items: center;
+}
+
+.warning {
+    color: orange;
     display: flex;
     align-items: center;
 }

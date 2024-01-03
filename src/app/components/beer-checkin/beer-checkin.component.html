@@ -1,5 +1,5 @@
 <mat-accordion>
-    <mat-expansion-panel #newCheckinPanel [expanded]="true">
+    <mat-expansion-panel #newCheckinPanel [expanded]="false">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Bier Check-in
@@ -62,14 +62,19 @@
                             <mat-form-field>
                                 <mat-label>Alcohol Percentage</mat-label>
                                 <input 
-                                    type="number"
+                                    type="text"
                                     matInput
                                     formControlName="alcoholPercentage"
+                                    (input)="convertDecimal($event)"
                                     min="0"
                                     max="100"
                                     step="0.1"
                                     >
                             </mat-form-field>
+                            <span class="error" *ngIf="beerFormErrorMessage">
+                                <mat-icon>warning</mat-icon>
+                                <h3>{{ beerFormErrorMessage }}</h3>
+                            </span>
                             <button mat-raised-button color="primary" type="submit" [disabled]="!canCreateBeer()">Maak aan</button>            
                             <button mat-raised-button color="primary" type="button" [disabled]="!beerExists()" (click)="selectBeer()">Kies bestaand</button>            
                         </form>
@@ -84,6 +89,10 @@
                 <span class="warning" *ngIf="beerCheckedIn()">
                     <mat-icon>warning</mat-icon>
                     <h3>Dit bier is al ingecheckt</h3>
+                </span>
+                <span class="error" *ngIf="userCheckedInToday()">
+                    <mat-icon>warning</mat-icon>
+                    <h3>Deze gebruiker heeft op deze datum al ingecheckt</h3>
                 </span>
                 <mat-form-field>
                     <mat-label>Speler</mat-label>
@@ -110,6 +119,11 @@
                         >
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <!-- <mat-checkbox>In café</mat-checkbox> -->
+                <mat-form-field>
+                    <input matInput [hidden]="true">
+                    <mat-checkbox formControlName="inBar">In café</mat-checkbox>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Cijfer (optioneel)</mat-label>
