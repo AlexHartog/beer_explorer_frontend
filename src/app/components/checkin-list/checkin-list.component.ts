@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 
-import { Checkin } from '../../models/checkin';
+import { Checkin, getInBarString } from '../../models/checkin';
 import { CheckinService } from '../../services/checkin.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { CheckinService } from '../../services/checkin.service';
 export class CheckinListComponent {
   // beers: Beer[] = [];
   checkins: MatTableDataSource<Checkin> = new MatTableDataSource<Checkin>([]);
-  displayedColumns: string[] = ['date', 'user', 'brand', 'beerType', 'beerName', 'rating'];
+  displayedColumns: string[] = ['date', 'user', 'brand', 'beerType', 'beerName', 'inBar', 'rating'];
 
   constructor(
     private checkinService: CheckinService,

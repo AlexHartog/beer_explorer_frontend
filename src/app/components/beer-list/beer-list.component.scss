@@ -12,7 +12,7 @@
 
     .mat-mdc-header-row {
         color: #ffffff;
-        background-color: mat.get-color-from-palette($default-accent); // Adjust header background color here
+        background-color: mat.get-color-from-palette($default-accent); // Can we get this from theme?
 
         .mat-mdc-header-cell {
             padding: 8px 24px;

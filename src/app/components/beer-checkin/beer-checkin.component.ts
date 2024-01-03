@@ -259,6 +259,7 @@ export class BeerCheckinComponent implements OnInit {
       beerId: this.checkinForm.get('beer')?.value,
       userId: userId,
       date: this.checkinForm.get('date')?.value,
+      in_bar: false,
       rating: this.checkinForm.get('rating')?.value,
     };
     console.log("Checkin: ", newCheckin)
