@@ -1,6 +1,12 @@
 # BeerExplorerFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
+This is the frontend for the beer explorer app. 
+
+## Current state
+
+This project needed to have a prototype live on the 1st of January. Therefore, the code was built based on having the functionality available. In the coming period, the code quality will be significantly improved. 
+
+The frontend now provides a form to create / select beers and to check them in. It also show a table with all check-ins created so far.
 
 ## Development server
 
