@@ -120,20 +120,21 @@
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
-                <!-- <mat-checkbox>In café</mat-checkbox> -->
                 <mat-form-field>
                     <input matInput [hidden]="true">
                     <mat-checkbox formControlName="inBar">In café</mat-checkbox>
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Cijfer</mat-label>
-                    <mat-select
+                    <input 
+                        type="text"
+                        matInput
                         formControlName="rating"
+                        (input)="convertDecimalRating($event)"
+                        min="0"
+                        max="100"
+                        step="0.1"
                         >
-                        <mat-option *ngFor="let rate of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" [value]="rate">
-                            {{rate}}
-                        </mat-option>
-                    </mat-select>
                 </mat-form-field>
                 <!-- TODO: Add picture upload -->
                 <!-- <mat-form-field> -->

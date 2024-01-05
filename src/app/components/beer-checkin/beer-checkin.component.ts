@@ -261,6 +261,13 @@ export class BeerCheckinComponent implements OnInit {
     this.beerForm.controls["alcoholPercentage"].setValue(normalizedValue);
   }
 
+  convertDecimalRating(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    let normalizedValue = inputValue.replace(/,/g, '.');
+    normalizedValue = normalizedValue.replace(/[^0-9.]/g, '');
+    this.checkinForm.controls["rating"].setValue(normalizedValue);
+  }
+
   getUserId(): number | undefined {
     const currentUser = this.users.find(user => user.name === this.checkinForm.get('user')?.value);
     return currentUser?.id;
