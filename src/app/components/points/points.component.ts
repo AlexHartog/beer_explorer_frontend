@@ -17,7 +17,7 @@ export class PointsComponent implements OnInit {
   // points: Points[] = [];
 
   points: MatTableDataSource<Points> = new MatTableDataSource<Points>([]);
-  displayedColumns: string[] = ['user', 'points'];
+  displayedColumns: string[] = ['user', 'weeks', 'points', 'unique', 'bars'];
 
   constructor(private pointsService: PointsService) {}
 
@@ -28,7 +28,7 @@ export class PointsComponent implements OnInit {
   getPoints(): void {
     this.pointsService.getPoints()
       .subscribe(points => {
-        const sortedPoints = points.sort((a, b) => a.points > b.points ? -1 : 1);
+        const sortedPoints = points.sort((a, b) => a.points_weeks == b.points_weeks ? (a.total_points > b.total_points ? -1 : 1) : (a.points_weeks > b.points_weeks ? -1 : 1) );
         this.points = new MatTableDataSource<Points>(sortedPoints);
       });
   }

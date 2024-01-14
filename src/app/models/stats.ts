@@ -3,5 +3,8 @@
 
 export interface Points {
     user_name: string
-    points: number
+    total_points: number
+    points_unique: number
+    points_bars: number
+    points_weeks: number
 }
