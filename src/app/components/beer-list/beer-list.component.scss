@@ -6,7 +6,12 @@
     background-color: #fff;
 
     .mat-mdc-header-row, .mat-mdc-row {
-        min-height: 48px;
+        @media (max-width: 576px) {
+            height: 20px;
+          }
+          @media (min-width: 576px) {
+            min-height: 48px;
+        }
         border-bottom: 1px solid #e0e0e0;
     }
 
@@ -15,6 +20,11 @@
         background-color: mat.get-color-from-palette($default-accent); // Can we get this from theme?
 
         .mat-mdc-header-cell {
+            @media (max-width: 576px) {
+                font-size: 10px;
+                padding: 4px;
+              }
+
             padding: 8px 24px;
             text-align: left;
             font-weight: 304000;
@@ -22,6 +32,11 @@
     }
 
     .mat-mdc-cell {
+        @media (max-width: 576px) {
+            font-size: 9px;
+            padding: 4px;
+          }
+
         padding: 8px 24px;
         text-align: left;
     }
@@ -33,9 +48,26 @@
     }
 }
 
+.mat-table-wrapper {
+    overflow-x: auto;
+    padding: 5px;
+
+    @media (max-width: 576px) {
+        font-size: 5px;
+      }
+}
+
 // Style for the paginator
 .mat-paginator {
     mat-select {
         width: 50px;
     }
 }
+
+.checkin-header {
+    padding: 5px;
+}
+
+.no-wrap {
+    white-space: nowrap;
+  }
