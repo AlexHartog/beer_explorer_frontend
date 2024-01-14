@@ -1,15 +1,24 @@
 <mat-toolbar color="primary">
     <div class="menu-container">
-        <!-- <a routerLink="/"> -->
-        <h1>Beer Explorer</h1>
-        <!-- </a> -->
-        <!-- <div #menu class="menu-items">
-        <app-user-menu class="menu-item"></app-user-menu>
-        </div>
+        <nav>
+            <a routerLink="/">
+                <h1>Beer Explorer</h1>
+            </a>
+        </nav>
+        <button mat-raised-button  color="secondary" [matMenuTriggerFor]="menu">Menu</button>
+        <!-- <button mat-button [matMenuTriggerFor]="menu">Menu</button> -->
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item routerLink="/beers">Beers</button>
+            <button mat-menu-item routerLink="/checkins">Checkins</button>
+            <button mat-menu-item routerLink="/points">Stand</button>
+            <!-- Add more menu items here -->
+        </mat-menu>
+        
+        <!-- <app-user-menu class="menu-item"></app-user-menu> -->
+        
+        <!-- Mobile Menu Toggle Button -->
         <button class="menu-toggle" mat-icon-button (click)="openMenu()">
-        <mat-icon *ngIf="!menuIsOpen">menu</mat-icon>
-        <mat-icon *ngIf="menuIsOpen">clear</mat-icon>
-        </button> -->
+            <mat-icon>menu</mat-icon>
+        </button> 
     </div>
 </mat-toolbar>
-  

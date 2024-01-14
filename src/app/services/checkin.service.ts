@@ -76,6 +76,16 @@ export class CheckinService {
       catchError(this.handleError<Checkin>('addCheckin'))
     )
   }
+
+
+  deleteCheckin(checkin_id: number): Observable<Checkin> {
+    return this.http.delete<Checkin>(this.checkinUrl + '/' + checkin_id).pipe(
+      tap(() => {
+        this.loadCheckins();
+      }),
+      catchError(this.handleError<Checkin>('deleteCheckin'))
+    )
+  }
   
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

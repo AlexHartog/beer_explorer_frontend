@@ -1,0 +1,22 @@
+<div class="points-page">
+    <h3>Stand</h3>
+
+    <mat-table [dataSource]="points" class="points-list">
+
+        <!-- User Column -->
+        <ng-container matColumnDef="user">
+            <th mat-header-cell *matHeaderCellDef> Speler </th>
+            <td mat-cell *matCellDef="let element"> {{element.user_name}} </td>
+        </ng-container>
+
+        <!-- Points Column -->
+        <ng-container matColumnDef="points">
+            <th mat-header-cell *matHeaderCellDef> Punten </th>
+            <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </mat-table>
+</div>

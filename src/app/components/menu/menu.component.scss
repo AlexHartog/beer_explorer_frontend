@@ -1,0 +1,36 @@
+.menu-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.menu-item {
+    display: none;
+}
+
+@media (max-width: 768px) { /* Adjust breakpoint as needed */
+    .menu-toggle {
+        display: block;
+    }
+
+    .menu-item {
+        display: block;
+    }
+
+    /* Hide other menu items or reformat them for mobile */
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:visited, a:link {
+    color: inherit;
+}

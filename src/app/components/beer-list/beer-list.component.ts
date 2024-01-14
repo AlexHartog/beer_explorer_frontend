@@ -34,7 +34,6 @@ export class BeerListComponent implements OnInit {
   getBeers(): void {
     this.beerService.getBeers()
       .subscribe(beers => {
-        console.log('Fetched beers: ', beers);
         this.beers = new MatTableDataSource<Beer>(beers);
       });
   }

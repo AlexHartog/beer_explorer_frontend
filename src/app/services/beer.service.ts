@@ -21,7 +21,7 @@ export class BeerService {
   getBeers(): Observable<Beer[]> {
     return this.http.get<Beer[]>(this.beersUrl)
       .pipe(
-        tap(_ => console.log('fetched beers')),
+        tap(),
         catchError(this.handleError<Beer[]>('getBeers', []))
       );
   }

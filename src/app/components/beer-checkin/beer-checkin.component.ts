@@ -327,20 +327,18 @@ export class BeerCheckinComponent implements OnInit {
   }
 
   loadBeerTypeOptions(beers: Beer[]): void {
-    console.log("Reading from ", beers);
     this.beerTypeOptions = Array.from(new Set(beers.map(obj => obj.type.name))).sort();
     this.triggerControlRefresh(this.beerForm, 'beerType');
   }
 
   loadBeerNameOptions(beers: Beer[]): void {
-    this.beerNameOptions = Array.from(new Set(beers.map(obj => obj.name))).sort();
+    this.beerNameOptions = Array.from(new Set(beers.filter(obj => obj.name != null && obj.name != '').map(obj => obj.name))).sort();
     this.triggerControlRefresh(this.beerForm, 'beerName');
   }
 
   loadUserOptions(users: User[]): void {
     this.userOptions = Array.from(new Set(users.map(obj => obj.name))).sort();
     this.triggerControlRefresh(this.checkinForm, 'user');
-    console.log("Useroptions: ", this.userOptions);
   }
 
 }
