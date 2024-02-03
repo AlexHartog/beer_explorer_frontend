@@ -17,7 +17,7 @@ export class PointsComponent implements OnInit {
   // points: Points[] = [];
 
   points: MatTableDataSource<Points> = new MatTableDataSource<Points>([]);
-  displayedColumns: string[] = ['user', 'weeks', 'points', 'unique', 'bars'];
+  displayedColumns: string[] = ['user', 'weeks', 'points', 'unique', 'bars', 'jointCheckin'];
 
   constructor(private pointsService: PointsService) {}
 

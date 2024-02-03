@@ -46,6 +46,16 @@
             <td mat-cell *matCellDef="let element"> {{ element.in_bar ? "ja" : "nee"}} </td>
         </ng-container>    
 
+        <ng-container matColumnDef="jointCheckin">
+            <th mat-header-cell *matHeaderCellDef> Samen met </th>
+            <td mat-cell *matCellDef="let element">
+                <div *ngFor="let user of element.joint_checkin">
+                   {{ user.name }}
+                </div>
+            </td>
+        </ng-container>    
+
+
         <ng-container matColumnDef="delete">
             <th mat-header-cell *matHeaderCellDef>Delete</th>
             <td mat-cell *matCellDef="let element">

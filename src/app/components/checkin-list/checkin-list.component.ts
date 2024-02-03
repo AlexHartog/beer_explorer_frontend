@@ -26,7 +26,7 @@ import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.compone
 export class CheckinListComponent {
   // beers: Beer[] = [];
   checkins: MatTableDataSource<Checkin> = new MatTableDataSource<Checkin>([]);
-  displayedColumns: string[] = ['date', 'user', 'brand', 'beerType', 'beerName', 'percentage', 'inBar', 'rating', 'delete'];
+  displayedColumns: string[] = ['date', 'user', 'brand', 'beerType', 'beerName', 'percentage', 'inBar', 'jointCheckin', 'rating', 'delete'];
   // filterValues: FilterValues = {};
 
   constructor(

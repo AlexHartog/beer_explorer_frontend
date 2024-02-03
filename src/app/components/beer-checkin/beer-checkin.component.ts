@@ -60,7 +60,8 @@ export class BeerCheckinComponent implements OnInit {
   brandOptions: string[] = [];
   beerTypeOptions: string[] = [];
   beerNameOptions: string[] = [];
-  userOptions: string[] = [];
+  userNameOptions: string[] = [];
+  userOptions: User[] = [];
 
   selectedFile: File | null = null;
 
@@ -68,6 +69,7 @@ export class BeerCheckinComponent implements OnInit {
   filteredBeerTypeOptions: Observable<string[]> = of([]);
   filteredBeerNameOptions: Observable<string[]> = of([]);
   filteredUserOptions: Observable<string[]> = of([]);
+  jointCheckinOptions: Observable<User[]> = of ([]);
 
   constructor(
     private beerService: BeerService,
@@ -88,7 +90,8 @@ export class BeerCheckinComponent implements OnInit {
       beer: [null, Validators.required],
       date: [new Date(), Validators.required],
       rating: [null],
-      inBar: [false]
+      inBar: [false],
+      jointCheckin: [null]
       // TODO: Add Picture and Review 
 
     })
@@ -115,8 +118,12 @@ export class BeerCheckinComponent implements OnInit {
     );
     this.filteredUserOptions = this.checkinForm.controls['user'].valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value, this.userOptions))
+      map(value => this._filter(value, this.userNameOptions))
     );
+    this.jointCheckinOptions = this.checkinForm.controls['user'].valueChanges.pipe(
+      map(value => this.userOptions.filter(option => option.name.toLowerCase() != value.toLowerCase()))
+    )
+
   }
 
 
@@ -283,7 +290,7 @@ export class BeerCheckinComponent implements OnInit {
   }
 
   onCheckinSubmit(): void {
-    console.log("Creating checking")
+    console.log("Creating checkin")
     console.log(this.checkinForm.value);
     this.checkinFormErrorMessage = "";
     if(!this.checkinForm.valid) {
@@ -302,6 +309,7 @@ export class BeerCheckinComponent implements OnInit {
       date: this.checkinForm.get('date')?.value,
       in_bar: this.checkinForm.get('inBar')?.value,
       rating: this.checkinForm.get('rating')?.value,
+      joint_checkin: this.checkinForm.get('jointCheckin')?.value
     };
     console.log("Checkin: ", newCheckin)
     this.checkinService.createCheckin(newCheckin)
@@ -337,7 +345,8 @@ export class BeerCheckinComponent implements OnInit {
   }
 
   loadUserOptions(users: User[]): void {
-    this.userOptions = Array.from(new Set(users.map(obj => obj.name))).sort();
+    this.userNameOptions = Array.from(new Set(users.map(obj => obj.name))).sort();
+    this.userOptions = users;
     this.triggerControlRefresh(this.checkinForm, 'user');
   }
 

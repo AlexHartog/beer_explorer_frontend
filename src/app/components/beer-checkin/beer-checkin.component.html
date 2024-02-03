@@ -121,6 +121,14 @@
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field>
+                    <mat-label>Samen met</mat-label>
+                    <mat-select formControlName="jointCheckin" multiple>
+                        <mat-option *ngFor="let option of jointCheckinOptions | async" [value]="option.id">
+                        {{ option.name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
                     <input matInput [hidden]="true">
                     <mat-checkbox formControlName="inBar">In café</mat-checkbox>
                 </mat-form-field>

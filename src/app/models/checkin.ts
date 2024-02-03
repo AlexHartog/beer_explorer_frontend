@@ -7,6 +7,7 @@ export interface Checkin {
     date: Date
     rating: number
     in_bar: boolean
+    joint_checkin: [User]
     created_at: Date
 }
 
@@ -16,6 +17,7 @@ export interface CreateCheckin {
     date: Date
     in_bar: boolean
     rating?: number
+    joint_checkin: [User]
 }
 
 export function dateEquals(checkin: Checkin, date: Date) {
