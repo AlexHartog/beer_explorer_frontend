@@ -67,7 +67,7 @@ export class CheckinService {
       user_id: checkin.userId,
       rating: checkin.rating,
       in_bar: checkin.in_bar,
-      joint_checkin: checkin.joint_checkin
+      joint_checkin: checkin.joint_checkin ?? []
     }
     return this.http.post<Checkin>(this.checkinUrl + '/', postData, this.httpOptions).pipe(
       tap((newCheckin: Checkin) => {
